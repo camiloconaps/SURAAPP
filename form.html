@@ -1,0 +1,565 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<script src="assets/js/jquery-1.10.2.js"></script>
+<script>
+function $_GET(param)
+{
+	url = document.URL;
+	url = String(url.match(/\?+.+/));
+	url = url.replace("?", "");
+	url = url.split("&");
+	x = 0;
+	while (x < url.length)
+	{
+		p = url[x].split("=");
+		if (p[0] == param)
+		{
+			return decodeURIComponent(p[1]);
+		}
+		x++;
+	}
+}
+$(document).ready(function(){
+	$("#iduser").val($_GET("id"));
+	var uspv=$("#iduser").val();
+	var res_uspv = uspv.replace("#", "");
+                        var data_spv = {
+                                'sura_sperv'     : res_uspv
+                        }
+                $.ajax({
+                        type: "POST",
+                        url: '190.24.138.149/mobile/sura/usuarios.php',
+                        dataType: 'json',
+                        data: data_spv,
+                        beforeSend: function() {
+                                //$('#summary111').html('checking');
+                        },
+                        complete: function() {},
+                        success: function(html) {
+                                var cadena="<option value=''></option>";
+                                $.each(html, function(index,valor) {
+                                        //alert("element at " + index + ": " + valor); // will alert each value
+                                        cadena  = cadena +"<option value='"+index +"'>"+valor +"</option>";
+                                });
+                                $('#getUsuarios').val('').change();
+                                $('#getUsuarios').append(cadena);
+                        }
+                   });
+
+});
+</script>
+
+      <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Ventas SURA ICC</title>
+	<!-- BOOTSTRAP STYLES-->
+    <link href="assets/css/bootstrap.css" rel="stylesheet" />
+     <!-- FONTAWESOME STYLES-->
+    <link href="assets/css/font-awesome.css" rel="stylesheet" />
+        <!-- CUSTOM STYLES-->
+    <link href="assets/css/custom.css" rel="stylesheet" />
+     <!-- GOOGLE FONTS-->
+   <link href='http://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css' />
+    <script src="assets/js/jquery-1.10.2.js"></script>
+	<link href="assets/css/bootstrap-toggle.css" rel="stylesheet">
+	<script src="assets/js/bootstrap-toggle.js"></script>
+ <script src="https://code.jquery.com/jquery-2.1.4.min.js"></script>
+<script src="script.js"></script>
+
+	<script type="text/javascript">
+
+		function cambiar_pagina(){
+                	var userid=$("#iduser").val();
+			var res = userid.replace("#", "");
+                	location.href ="table.html?id="+res;
+        	}
+		function getPlan_P1(){
+			var p1= $("#product1").val();
+                                $('#plan_P1').val('').change();
+				$("#plan_P1 > option").remove();
+			if(p1=="AP"){
+				var opt_p1= "<option value=''></option> <option value='PLAN1'>PLAN1</option> <option value='PLAN2'>PLAN2</option> <option value='PLAN3'>PLAN3</option> <option value='PLAN4'>PLAN4</option>";
+				$('#plan_P1').append(opt_p1);
+			}	
+			if(p1=="RxH"){
+				var opt_p1= "<option value=''></option> <option value='PLAN1'>PLAN1</option> <option value='PLAN2'>PLAN2</option> <option value='PLAN3'>PLAN3</option>";
+				$('#plan_P1').append(opt_p1);
+			}	
+			if(p1=="Enf Grave"){
+				var opt_p1= "<option value=''></option> <option value='PLAN1'>PLAN1</option> <option value='PLAN2'>PLAN2</option> <option value='PLAN3'>PLAN3</option> <option value='PLAN4'>PLAN4</option>";
+				$('#plan_P1').append(opt_p1);
+			}	
+        	}
+		function getPlan_P2(){
+                        var p2= $("#product2").val();
+                                $('#plan_P2').val('').change();
+                                $("#plan_P2 > option").remove();
+                        if(p2=="AP"){
+                                var opt_p2= "<option value=''></option> <option value='PLAN1'>PLAN1</option> <option value='PLAN2'>PLAN2</option> <option value='PLAN3'>PLAN3</option> <option value='PLAN4'>PLAN4</option>";
+                                $('#plan_P2').append(opt_p2);
+                        }
+                        if(p2=="RxH"){
+                                var opt_p2= "<option value=''></option> <option value='PLAN1'>PLAN1</option> <option value='PLAN2'>PLAN2</option> <option value='PLAN3'>PLAN3</option>";
+                                $('#plan_P2').append(opt_p2);
+                        }
+                        if(p2=="Enf Grave"){
+                                var opt_p2= "<option value=''></option> <option value='PLAN1'>PLAN1</option> <option value='PLAN2'>PLAN2</option> <option value='PLAN3'>PLAN3</option> <option value='PLAN4'>PLAN4</option>";
+                                $('#plan_P2').append(opt_p2);
+                        }
+                }
+
+
+		function save_polizas(){
+			
+                        var p1= $("#getUsuarios").val();
+                        var p2= $("#polizas").val();
+                        var p3= $("#telefono").val();
+                        var p4= $("#nic").val();
+                        var p5= $("#product1").val();
+                        var p6= $("#npoliza1").val();
+                        var p7= $("#plan_P1").val();
+                        var p8= $("#file1").val();
+                        var p9= $("#product2").val();
+                        var p10= $("#npoliza2").val();
+                        var p11= $("#plan_P2").val();
+                        var p12= $("#file2").val();
+                        var p13= $("#iduser").val();
+
+			if (p2 == 1){
+				carga_file1();
+			}
+			if (p2 == 2){
+				carga_file2();
+			}
+
+			var data_venta = {
+            			'sura_use'     : p1,
+            			'sura_cpo'     : p2,
+            			'sura_tel'     : p3,
+            			'sura_nic'     : p4,
+            			'sura_pr1'     : p5,
+            			'sura_np1'     : p6,
+            			'sura_pl1'     : p7,
+            			'sura_fi1'     : p8,
+            			'sura_pr2'     : p9,
+            			'sura_np2'     : p10,
+            			'sura_pl2'     : p11,
+            			'sura_fi2'     : p12,
+            			'sura_sup'     : p13
+        		};
+			alert();
+			$.ajax({
+                        type: "POST",
+                        url: '190.24.138.149/mobile/sura/save_poliza.php',
+                        dataType: 'json',
+                        data: data_venta,
+                        beforeSend: function() {
+                                //$('#summary111').html('checking');
+                        },
+                        complete: function() {},
+                        success: function(html) {
+                                /*if (html=="error"){
+                                        $("#result_con").html("Usuario no valido")
+                                        $("#reload_login").show();
+                                }else{
+                                        location.href ="form.html?id="+html;
+                                }*/
+				alert(html);
+                        }
+                   });	
+			
+		}
+		function hab_polizas(){
+                        var npol = $("#polizas").val();
+			if (npol == 1){
+                        	$("#poliza1").show();
+			}
+			if (npol == 2){
+                        	$("#poliza1").show();
+                        	$("#poliza2").show();
+			}
+		}
+	</script>
+
+
+</head>
+<body>
+    <div id="wrapper">
+        <nav class="navbar navbar-default navbar-cls-top " role="navigation" style="margin-bottom: 0">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".sidebar-collapse">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="control.html"><img src="assets/img/logosura.png" alt=""/></a> 
+            </div>
+        </nav>   
+           <!-- /. NAV TOP  -->
+                <nav class="navbar-default navbar-side" role="navigation">
+            <div class="sidebar-collapse">
+                <ul class="nav" id="main-menu">
+                    <li  >
+                        <a  href="#" onclick="cambiar_pagina();"><i class="fa fa-table fa-3x"></i>  ESTADO</a>
+                    </li>				
+                    <li  >
+                        <a  href="index.html"><i class="fa fa-arrow-left fa-3x"></i>  LOGOUT</a>
+                    </li>				
+                </ul>
+               
+            </div>
+            
+        </nav>  
+        <!-- /. NAV SIDE  -->
+        <div id="page-wrapper" >
+        	<div id="page-inner">
+		        <div class="row">
+			        <div class="col-md-12">
+			        <!-- Form Elements -->
+				        <div class="panel panel-default">
+			                        <div class="panel-heading">
+							<input type="hidden" id="iduser" value="">
+							Cargue de Ventas
+                    				</div>
+                        			<div class="panel-body">
+						<table width="100%">
+						<tr>
+							<td class="tdventas">
+								<li class="fa fa-user fa-2x">
+								</li>
+							<td class="tdventas" align="center">
+                                                                <li class="fa fa-1x">
+									Asesor	
+								</li>
+							</td>
+							<td class="tdventas">
+								<li class="fa fa-2x">
+									<select id="getUsuarios">	
+									</select>	
+								</li>
+							</td>
+							</td>
+						</tr>
+						<tr>
+							<td class="tdventas">
+								<li class="fa fa-sort-numeric-asc fa-2x">
+								</li>
+							<td class="tdventas" align="center">
+                                                                <li class="fa fa-1x">
+									Cant. p&oacute;lizas
+								</li>
+							</td>
+							<td class="tdventas">
+								<li class="fa fa-2x">
+									<select id="polizas" onchange="hab_polizas();">	
+										<option value=""></option>
+										<option value="1">1</option>
+										<option value="2">2</option>
+									</select>	
+								</li>
+							</td>
+							</td>
+						</tr>
+						<tr>
+                                                        <td class="tdventas">
+                                                                <li class="fa fa-phone fa-2x">
+								</li>
+                                                        <td class="tdventas" align="center">
+                                                                <li class="fa fa-1x">
+                                                                        Tel&eacute;fono (Indicativo)
+                                                                </li>
+                                                        </td>
+                                                        <td class="tdventas">
+                                                                <li class="fa fa-2x">
+                                                                        <input type="number" id="telefono"/>
+                                                                </li>
+                                                        </td>
+                                                        </td>
+                                                </tr>
+                                                <tr>
+							<td class="tdventas">
+                                                                <li class="fa fa-info fa-2x">
+                                                                </li>
+                                                        <td class="tdventas" align="center">
+                                                                <li class="fa fa-1x">
+                                                                        NIC
+                                                                </li>
+                                                        </td>
+                                                        <td class="tdventas">
+                                                                <li class="fa fa-2x">
+                                                                        <input type="number" id="nic"/>
+                                                                </li>
+                                                        </td>
+                                                        </td>
+                                                </tr>
+						</table>
+                    				</div>
+                        			<div class="panel-body" id="poliza1" style="display:none;">
+						<table width="100%">
+						<tr>
+							<td class="tdventas">
+                                                                <li class="fa fa-2x">
+									P&oacute;liza 1	
+								</li>
+							</td>
+							<td class="tdventas">
+								<li class="fa fa-2x">
+									<input type="checkbox" data-toggle="toggle" id="check1">
+								</li>
+							</td>
+							<td class="tdventas">
+								<a href="#" onclick="$('#div_po1').show();"><li class="fa fa-file-o fa-2x">
+								</li></a>
+							</td>
+						</tr>
+						</table>
+						</div>
+						 <div class="panel-body" id="poliza2" style="display:none;">
+                                                <table width="100%">
+                                                <tr>
+                                                        <td class="tdventas">
+                                                                <li class="fa fa-2x">
+                                                                        P&oacute;liza 2
+                                                                </li>
+                                                        </td>
+                                                        <td class="tdventas">
+                                                                <li class="fa fa-2x">
+									<input type="checkbox" data-toggle="toggle" id="check2"/>
+                                                                </li>
+                                                        </td>
+                                                        <td class="tdventas">
+								<a href="#" onclick="$('#div_po2').show();"><li class="fa fa-files-o fa-2x">
+                                                                </li></a>
+                                                        </td>
+                                                </tr>
+                                                </table>
+                                                </div>
+
+						<div class="panel-body" >
+                                                <table width="100%">
+                                                <tr>
+                                                        <td class="tdventas" colspan="3" align="center">
+                                                                <a href="#" onclick="save_polizas();"><li class="fa fa-save fa-2x">
+                                                                </li></a>
+
+                                                        </td>
+                                                </tr>
+                                                </table>
+                                                </div>
+
+
+
+                        			<div id="div_po1" style="display:none;">
+			                        <div class="panel-heading" style="color:GREEN; font-weight:bold;" align="center">
+							P&oacute;liza 1
+                    				</div>
+                        			<div class="panel-body">
+							<table width="100%">
+                                                	<tr>
+                                                        	<td class="tdventas">
+                                                                        <li class="fa fa-caret-right fa-2x">
+                                                                        </li>
+        	                                                </td>
+                                                        	<td class="tdventas">
+                                                                	<li class="fa fa-1x">
+                                                                        	Producto
+	                                                                </li>
+        	                                                </td>
+                	                                        <td class="tdventas">
+                        	                                        <li class="fa fa-2x">
+										<select onchange="getPlan_P1()" id="product1">
+											<option value=""></option>
+											<option value="AP">AP</option>
+											<option value="RxH">RxH</option>
+											<option value="Enf Grave">Enf Grave</option>
+										</select>
+                                        	                        </li>
+                                                	        </td>
+                	                                </tr>
+							<tr>
+                                                                <td class="tdventas">
+                                                                        <li class="fa fa-caret-right fa-2x">
+                                                                        </li>
+        	                                                </td>
+                                                                <td class="tdventas">
+                                                                        <li class="fa fa-1x">
+                                                                                N. de p&oacute;liza
+                                                                        </li>
+                                                                </td>
+                                                                <td class="tdventas">
+                                                                        <li class="fa fa-2x">
+										<input type="number" id="npoliza1"/>
+                                                                        </li>
+                                                                </td>
+                                                        </tr>
+							<tr>
+                                                                <td class="tdventas">
+                                                                        <li class="fa fa-caret-right fa-2x">
+                                                                        </li>
+                                                                </td>
+                                                                <td class="tdventas">
+                                                                        <li class="fa fa-1x">
+                                                                                Plan
+                                                                        </li>
+                                                                </td>
+                                                                <td class="tdventas">
+                                                                        <li class="fa fa-2x">
+                                                                                <select id="plan_P1">
+                                                                                </select>
+                                                                        </li>
+                                                                </td>
+                                                        </tr>
+							<tr>
+								<td class="tdventas">
+                                                                        <li class="fa fa-caret-right fa-2x">
+                                                                        </li>
+                                                                </td>
+                                                                <td class="tdventas" >
+                                                                        <li class="fa fa-1x">
+                                                                               Adjunto
+                                                                        </li>
+                                                                </td>
+                                                                <td class="tdventas" >
+                                                                </td>
+					
+                                                        </tr>
+							<tr>
+                                                                <td class="tdventas" colspan="3">
+                                                                        <li class="fa fa-1x">
+                                                                                <input type="file" id="file1" />
+                                                                        </li>
+                                                                </td>
+                                                        </tr>
+							<tr>
+                                                                <td class="tdventas" colspan="2">
+                                                                </td>
+                                                                <td class="tdventas" align="right">
+									<a href="#" onclick="$('#div_po1').hide();"><li class="fa fa-thumbs-o-up fa-2x">
+                                                                	</li></a>
+		
+                                                                </td>
+                                                        </tr>
+                                                </table>
+                                                </div>
+                                                </div>
+                        			<div id="div_po2" style="display:none;">
+			                        <div class="panel-heading" style="color:GREEN; font-weight:bold;" align="center">
+							P&oacute;liza 2
+                    				</div>
+                        			<div class="panel-body">
+							<table width="100%">
+                                                        <tr>
+                                                                <td class="tdventas">
+                                                                        <li class="fa fa-caret-right fa-2x">
+                                                                        </li>
+                                                                </td>
+                                                                <td class="tdventas">
+                                                                        <li class="fa fa-1x">
+                                                                                Producto
+                                                                        </li>
+                                                                </td>
+                                                                <td class="tdventas">
+                                                                        <li class="fa fa-2x">
+                                                                                <select onchange="getPlan_P2()" id="product2">
+                                                                                        <option value=""></option>
+                                                                                        <option value="AP">AP</option>
+                                                                                        <option value="RxH">RxH</option>
+                                                                                        <option value="Enf Grave">Enf Grave</option>
+                                                                                </select>
+                                                                        </li>
+                                                                </td>
+                                                        </tr>
+                                                        <tr>
+                                                                <td class="tdventas">
+                                                                        <li class="fa fa-caret-right fa-2x">
+                                                                        </li>
+                                                                </td>
+                                                                <td class="tdventas">
+                                                                        <li class="fa fa-1x">
+                                                                                N. de p&oacute;liza
+                                                                        </li>
+                                                                </td>
+                                                                <td class="tdventas">
+                                                                        <li class="fa fa-2x">
+                                                                                <input type="number" id="npoliza2"/>
+                                                                        </li>
+                                                                </td>
+                                                        </tr>
+							<tr>
+                                                                <td class="tdventas">
+                                                                        <li class="fa fa-caret-right fa-2x">
+                                                                        </li>
+                                                                </td>
+                                                                <td class="tdventas">
+                                                                        <li class="fa fa-1x">
+                                                                                Plan
+                                                                        </li>
+                                                                </td>
+                                                                <td class="tdventas">
+                                                                        <li class="fa fa-2x">
+                                                                                <select id="plan_P2">
+                                                                                </select>
+                                                                        </li>
+                                                                </td>
+                                                        </tr>
+                                                        <tr>
+                                                                <td class="tdventas">
+                                                                        <li class="fa fa-caret-right fa-2x">
+                                                                        </li>
+                                                                </td>
+                                                                <td class="tdventas" >
+                                                                        <li class="fa fa-1x">
+                                                                               Adjunto
+                                                                        </li>
+                                                                </td>
+                                                                <td class="tdventas" >
+                                                                </td>
+
+                                                        </tr>
+                                                        <tr>
+                                                                <td class="tdventas" colspan="3">
+                                                                        <li class="fa fa-1x">
+                                                                                <input type="file" id="file2" />
+                                                                        </li>
+                                                                </td>
+                                                        </tr>
+                                                        <tr>
+                                                                <td class="tdventas" colspan="2">
+                                                                </td>
+                                                                <td class="tdventas" align="right">
+                                                                        <a href="#" onclick="$('#div_po2').hide();$('#check2').bootstrapToggle('off')"><li class="fa fa-thumbs-o-up fa-2x">
+                                                                        </li></a>
+
+                                                                </td>
+                                                        </tr>
+
+                                                </table>
+	
+                                                </div>
+                                                </div>
+
+                			</div>
+                		</div>
+                	</div>
+                </div>
+                <!-- /. ROW  -->
+    	</div>
+             <!-- /. PAGE INNER  -->
+            </div>
+         <!-- /. PAGE WRAPPER  -->
+        </div>
+     <!-- /. WRAPPER  -->
+    <!-- SCRIPTS -AT THE BOTOM TO REDUCE THE LOAD TIME-->
+    <!-- JQUERY SCRIPTS -->
+      <!-- BOOTSTRAP SCRIPTS -->
+    <script src="assets/js/bootstrap.min.js"></script>
+    <!-- METISMENU SCRIPTS -->
+    <script src="assets/js/jquery.metisMenu.js"></script>
+      <!-- CUSTOM SCRIPTS -->
+    <script src="assets/js/custom.js"></script>
+    
+   
+</body>
+</html>
