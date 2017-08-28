@@ -9,7 +9,7 @@ function carga_file1() {
         data.append('archivo', file);
         data.append('nic', inputNic);
         data.append('pol', inputPol);
-        var url = "http://190.24.138.149/mobile/sura/upload.php";
+        var url = "http://190.24.138.149/mobile/sura/carga/upload.php";
         $.ajax({
             url: url,
             type: 'POST',
@@ -37,7 +37,7 @@ function carga_file2() {
         data.append('archivo', file);
         data.append('nic', inputNic);
         data.append('pol', inputPol2);
-        var url = "http://190.24.138.149/mobile/sura/upload.php";
+        var url = "http://190.24.138.149/mobile/sura/carga/upload.php";
         $.ajax({
             url: url,
             type: 'POST',
