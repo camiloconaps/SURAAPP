@@ -29,7 +29,7 @@ $(document).ready(function(){
                         }
                 $.ajax({
                         type: "POST",
-                        url: '190.24.138.149/mobile/sura/usuarios.php',
+                        url: 'http://190.24.138.149/mobile/sura/usuarios.php',
                         dataType: 'json',
                         data: data_spv,
                         beforeSend: function() {
@@ -151,7 +151,7 @@ $(document).ready(function(){
 			alert();
 			$.ajax({
                         type: "POST",
-                        url: '190.24.138.149/mobile/sura/save_poliza.php',
+                        url: 'http://190.24.138.149/mobile/sura/save_poliza.php',
                         dataType: 'json',
                         data: data_venta,
                         beforeSend: function() {
