@@ -148,7 +148,7 @@ $(document).ready(function(){
             			'sura_fi2'     : p12,
             			'sura_sup'     : p13
         		};
-			alert();
+			
 			$.ajax({
                         type: "POST",
                         url: 'http://190.24.138.149/mobile/sura/save_poliza.php',
@@ -166,6 +166,19 @@ $(document).ready(function(){
                                         location.href ="form.html?id="+html;
                                 }*/
 				alert(html);
+				$("#getUsuarios").val('');
+                        	$("#polizas").val('');
+                        	$("#telefono").val('');
+                        	$("#nic").val('');
+                        	$("#product1").val('');
+                        	$("#npoliza1").val('');
+                        	$("#plan_P1").val('');
+                        	$("#file1").val('');
+                        	$("#product2").val('');
+                        	$("#npoliza2").val('');
+                        	$("#plan_P2").val('');
+                        	$("#file2").val('');
+                        	$("#btnsave").hide();
                         }
                    });	
 			
@@ -342,8 +355,8 @@ $(document).ready(function(){
                                                 <table width="100%">
                                                 <tr>
                                                         <td class="tdventas" colspan="3" align="center">
-                                                                <a href="#" onclick="save_polizas();"><li class="fa fa-save fa-2x">
-                                                                </li></a>
+                                                                <a href="#" onclick="save_polizas();"><div id="btnsave"><li class="fa fa-save fa-2x">
+									</li></div></a>
 
                                                         </td>
                                                 </tr>
